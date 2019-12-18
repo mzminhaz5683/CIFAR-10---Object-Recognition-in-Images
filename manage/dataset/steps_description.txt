@@ -1,0 +1,47 @@
+locals - kaggles | [description] || val_loss + .15
+==================================================
+0.8012 - 0.79170 | [linear:1,5; relu:*, softmax:7]
+0.8091 - 0.80220 | [linear:1,6; relu:*, softmax:7]
+0.8148 - 0.80510 | [linear:1,6; lrelu_0.1:*, softmax:7]
+0.8119 - 0.80650 | [linear:1,8; lrelu_0.1:*, softmax:9] Conv2D = [32,32,64,64]
+0.8095 - 0.80310 | [linear:1,8; lrelu_0.1:*, softmax:9]_3_Dense=128
+0.8071 - 0.80840 | [linear:1,8; lrelu_0.1:*, softmax:9]_3_Dense=384
+0.8205 - 0.81310 | [relu:1; linear:8; lrelu_0.1:*, softmax:9]_4_Dense=384 Conv2D = [32,64,64,128] [Dropout:.2,.25,.3]
+0.8144 - 0.81140 | [relu:1; linear:8; lrelu_0.2:*, softmax:9]_4_Dense=384 Conv2D = [32,64,64,128] [Dropout:.2,.25,.3]]
+
+# my_model_baseline
+===================
+0.8144 - 0.81270 | aug_bsln-6_dns-384_bs-200_epoch-180/300; relu = lrelu; Conv2D = [32,32,  64,64]; Dropout = [0.20, 0.20, 0.30]
+
+# my_model_90_des-x_873
+=======================
+0.8567 - 0.86160 | my_model_90_des_861_bs-200_epoch-57/60; relu = lrelu; Conv2D = [32,32,  64,64,  128,128]; Dropout = [0.20, 0.25, 0.30, 0.35]
+0.8711 - 0.87390 | my_model_90_des-x_873_bs-200_epoch-202/220; relu = lrelu; Conv2D = [32,32,  64,64,  128,128]; Dropout = [0.15, 0.20, 0.25]
+
+
+# my_model_marge_net --conv_2D = [16, 32, 64]--dropout = [0.25, 0.30, 0.35]
+===========================================================================
+0.8562 - 0.86970 | my_model_marge_net_bs-140_epoch-47/200; relu*lrelu; if_n=[0,0], loop=0, a_pool=3)(30m)
+
+
+# my_model_x_full_lrelu --conv_2D = [16, 32, 64]--dropout = [0.20, 0.25, 0.30]
+==============================================================================
+0.---- - 0.---- | my_model_x_full_relu_epoch-49/50; lrelu; if_n=[0,1,0], N=1, k=6; 1st_epoch=(29m)
+
+# marge_model
+=============                                                                  
+~~~~~~ - 0.88910 | "8567", "8711", "8562"; default = 8711                
+
+
+# marge_submissions
+===================
+~~~~~~ - 0.91440 | "submission_mz", "8711", "88910"; default = 88910
+
+here, "submission_mz" was the test prediction of "my_model_x_full_lrelu" model.
+
+
+some note:
+    adam = momenterm + rmsprop
+    conve_2d > time * time > layers
+    lower batch size ~ use lower ram (batch size < 30 is danger)
+
